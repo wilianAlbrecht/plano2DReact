@@ -1,4 +1,14 @@
-export const pecas = [
-  { id: 1, nome: "Porta A", largura: 600, altura: 400, qtd: 2 },
-  { id: 2, nome: "Base", largura: 800, altura: 300, qtd: 1 },
+export const mockPecas = [
+  {
+    id: "peca1",
+    nome: "Peça A",
+    largura: 300,
+    altura: 200,
+  },
+  {
+    id: "peca2",
+    nome: "Peça B",
+    largura: 500,
+    altura: 250,
+  },
 ];
