@@ -3,11 +3,12 @@ import React from "react";
 import { useDrag } from "react-dnd";
 
 interface PecaProps {
-  id: number;        // model id
+  id: string;      
   nome: string;
-  largura: number;   // mm
-  altura: number;    // mm
+  largura: number;
+  altura: number;
 }
+
 
 export function Peca({ id, nome, largura, altura }: PecaProps) {
   const [{ isDragging }, dragRef] = useDrag(() => ({

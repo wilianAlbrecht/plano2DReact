@@ -155,7 +155,7 @@ export function Plano({ largura, altura }: PlanoProps) {
             y={p.y}
             escala={escala}
             temColisao={temColisao}
-            piscando={p.piscando} // ← AQUI
+            piscando={p.piscando}
           />
         );
       })}
