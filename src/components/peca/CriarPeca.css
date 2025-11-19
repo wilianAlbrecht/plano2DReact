@@ -1,22 +1,53 @@
 .criarpeca-container {
-  border: 1px solid #ccc;
-  padding: 10px;
+  background: #3b3d45;              /* fundo mais suave */
+  border: 1px solid #4b4e55;        /* borda grafite clara */
+  padding: 12px;
   margin-bottom: 16px;
+  border-radius: 6px;               /* cantos suaves */
+  color: #f5f5f7;                   /* texto claro */
 }
 
+/* inputs */
 .criarpeca-container input {
   display: block;
   width: 100%;
-  margin-bottom: 8px;
-  padding: 6px;
+  margin-bottom: 10px;
+  padding: 8px;
+
+  background: #2f3136;             /* fundo escuro suave */
+  border: 1px solid #4b4e55;
+  color: #f5f5f7;
+
+  border-radius: 4px;
   box-sizing: border-box;
 }
 
-.criarpeca-actions {
-  margin-top: 8px;
+.criarpeca-container input:focus {
+  outline: none;
+  border-color: #8ab4f8;            /* azul suave agradável */
+  background: #35373c;
 }
 
+/* container dos botões */
+.criarpeca-actions {
+  margin-top: 12px;
+}
+
+/* botões */
 .criarpeca-actions button {
-  padding: 6px 12px;
+  padding: 8px 14px;
   cursor: pointer;
+
+  background: #4a4d52;
+  border: 1px solid #5a5d63;
+  color: #f5f5f7;
+
+  border-radius: 4px;
+  transition: 0.2s;
+}
+
+.criarpeca-actions button:hover {
+  background: #575b62;
+  border-color: #8ab4f8;
+  color: #ffffff;
 }

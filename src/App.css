@@ -1,101 +1,125 @@
+/* WRAPPER GERAL -------------------------------------------------- */
 .app-wrapper {
   display: flex;
   gap: 20px;
   padding: 20px;
+  height: 100vh;
+
+  background: #2b2d31;          /* <- fundo suave e agradável */
+  color: #f0f0f0;
+  font-family: "Inter", sans-serif;
 }
 
+/* SIDEBAR -------------------------------------------------------- */
 .sidebar {
   width: 300px;
+  background: #3a3d42;         /* <- grafite claro */
+  padding: 16px;
+  border-right: 1px solid #4a4d52;
+  border-radius: 8px;
 }
 
-.plano-item {
-  cursor: pointer;
-  padding: 6px;
-  border: 1px solid #ddd;
-  margin-bottom: 6px;
-  background: #fff;
-  transition: background 0.2s ease;
-}
-
-.plano-item:hover {
-  background: #f3f3f3;
-}
-
-.plano-item-ativo {
-  background: #e6ffee;
-}
-
-.plano-view {
-  flex: 1;
-}
-
-
-.idioma-box {
-  margin-bottom: 16px;
-}
-
-.idioma-select {
-  width: 100%;
-  padding: 6px;
-  margin-top: 4px;
-  cursor: pointer;
-}
-
+/* ITENS DE PLANO ------------------------------------------------- */
 .plano-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 6px;
-  border: 1px solid #ddd;
-  margin-bottom: 6px;
-  background: #fff;
+
+  padding: 10px;
+  border: 1px solid #4c4f55;
+  margin-bottom: 10px;
+
+  background: #404348;          /* <- tom suave intermediário */
+  border-radius: 6px;
+
+  transition: background 0.2s ease, border 0.2s ease;
+  cursor: pointer;
+}
+
+.plano-item:hover {
+  background: #4a4d52;         /* <- claro o suficiente para ser agradável */
 }
 
 .plano-item-ativo {
-  background: #e6ffee;
-  border-color: #5cb85c;
+  background: #3f5445;         /* <- verde discreto (agradável aos olhos) */
+  border-color: #64e9a6;
 }
 
+/* ÁREA DE CLICK DO PLANO ----------------------------------------- */
 .plano-click-area {
   flex: 1;
   cursor: pointer;
 }
 
+/* BOTÃO DE REMOVER ----------------------------------------------- */
 .btn-remover {
   margin-left: 8px;
-  background: transparent;
-  border: none;
-  color: #b00;
+  background: #383b40;
+  border: 1px solid #555;
+  color: #ff7a7a;
+
   cursor: pointer;
   font-size: 14px;
+  padding: 4px 8px;
+  border-radius: 4px;
+
+  transition: 0.2s;
 }
 
 .btn-remover:hover {
-  color: #ff0000;
+  background: #553333;
+  border-color: #ff4d4d;
+  color: #ff4d4d;
 }
+
+/* LISTA DE PEÇAS -------------------------------------------------- */
 .peca-list-item {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 8px;
 
-  /* para evitar que o botão vá para outra linha */
   width: 100%;
 }
 
-.btn-remover {
-  background: #fff;
-  border: 1px solid #ccc;       /* <-- borda leve para acompanhar o layout */
-  color: #b00;
+/* SELECT DE IDIOMA ----------------------------------------------- */
+.idioma-box {
+  margin-bottom: 16px;
+}
+
+.idioma-select {
+  width: 100%;
+  padding: 8px;
+  margin-top: 4px;
   cursor: pointer;
-  font-size: 14px;
-  padding: 2px 6px;
-  border-radius: 4px;           /* cantos suaves */
+
+  background: #404348;
+  color: #f1f1f1;
+
+  border: 1px solid #4f5257;
+  border-radius: 6px;
+
   transition: 0.2s;
 }
 
-.btn-remover:hover {
-  background: #ffe5e5;
-  border-color: #ff0000;
-  color: #ff0000;
+.idioma-select:hover {
+  background: #4a4d52;
+}
+
+/* ÁREA PRINCIPAL -------------------------------------------------- */
+.plano-view {
+  flex: 1;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* APLICAR O DARK MODE AO BODY */
+body {
+  background: #2b2d31;     /* mesma cor do app-wrapper */
+  margin: 0;
+  padding: 0;
+  color: #f0f0f0;
+  font-family: "Inter", sans-serif;
 }

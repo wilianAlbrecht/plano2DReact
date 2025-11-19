@@ -1,22 +1,42 @@
-.peca-wrapper {
-  border: 1px solid #333;
-  padding: 8px;
-  margin-bottom: 6px;
-  cursor: grab;
-  background: #fff;
-  transition: opacity 0.2s ease;
-  flex: 1;
-  width: auto;
+.peca-wrapper-plano {
+  position: absolute;
+  pointer-events: auto;
+  box-sizing: content-box;
 }
 
-.peca-dragging {
+/* peça normal */
+.peca-plano {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 12px;
+  user-select: none;
+  cursor: move;
+
+  box-sizing: border-box;
+
+  /* === ROXO DESTAQUE === */
+  background: rgba(157, 113, 255, 0.30);   /* roxo claro translúcido */
+  border: 2px solid #a883ff;               /* roxo suave */
+  color: #2b1a3f;                           /* roxo escuro para texto */
+
+  border-radius: 6px;
+  transition: 0.2s;
+}
+
+/* arrastando */
+.peca-plano.dragging {
   opacity: 0.5;
 }
 
-.peca-title {
-  font-weight: 600;
-}
-
-.peca-size {
-  font-size: 12px;
+/* colisão */
+.peca-plano.piscando {
+  background: rgba(255, 80, 80, 0.5);
+  border-color: #ff6b6b;
+  animation: blinkErro 0.25s ease-in-out alternate 6;
 }
