@@ -24,7 +24,7 @@ Ele foi desenvolvido para demonstrar domínio de React, TypeScript, gestão de e
 
 Antes de começar, certifique-se de ter instalado:
 
-'''- **Node.js 18+**  
+ **Node.js 18+**  
   Baixe em: https://nodejs.org/  '''
 
 Para verificar se o Node e o npm estão instalados corretamente:
