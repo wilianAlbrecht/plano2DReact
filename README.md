@@ -29,7 +29,7 @@ Antes de começar, certifique-se de ter instalado:
 
 Para verificar se o Node e o npm estão instalados corretamente:
 
-```sh
+'''
 node -v
 npm -v'''
 
