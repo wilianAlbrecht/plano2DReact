@@ -14,5 +14,6 @@
 
   "criarPlano": "Create Board",
   "erroNomePlano": "Enter a name for the board",
-  "nomePlano": "Board name"
+  "nomePlano": "Board name",
+  "remover": "Remove"
 }

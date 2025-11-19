@@ -14,5 +14,6 @@
 
   "criarPlano": "Criar Plano",
   "erroNomePlano": "Digite um nome para o plano",
-  "nomePlano": "Nome do plano"
+  "nomePlano": "Nome do plano",
+  "remover": "Remover"
 }

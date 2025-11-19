@@ -31,3 +31,28 @@
 .peca-plano.dragging {
   opacity: 0.5;
 }
+.peca-wrapper-plano {
+  position: absolute;
+  box-sizing: content-box;
+  pointer-events: auto;
+}
+
+/* visual da peça */
+.peca-plano {
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 110, 255, 0.18);
+  border: 2px solid #0a56ff;
+  box-sizing: border-box;
+}
+
+/* piscando */
+.peca-plano.piscando {
+  background: rgba(255, 0, 0, 0.6);
+  border-color: #ff3333;
+  animation: blinkErro 0.25s ease-in-out alternate 6;
+}
+
+.peca-plano.dragging {
+  opacity: 0.5;
+}

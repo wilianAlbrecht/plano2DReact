@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { useDrag } from "react-dnd";
 import "./PecaNoPlano.css";
 
@@ -21,25 +21,40 @@ export function PecaNoPlano({
   y,
   piscando,
 }: Props) {
+  const elemRef = useRef<HTMLDivElement | null>(null);
+
   const [{ isDragging }, dragRef] = useDrag(() => ({
     type: "PECA_ALOCADA",
-    item: { instanciaId, origem: "PLANO" },
+    // begin captura o offset do mouse relativo à peça já no plano
+    item: (monitor : any) => {
+      const client = monitor.getClientOffset();
+      const rect = elemRef.current?.getBoundingClientRect();
+      const offsetX = client && rect ? client.x - rect.left : 0;
+      const offsetY = client && rect ? client.y - rect.top : 0;
+
+      return { instanciaId, origem: "PLANO", offsetX, offsetY };
+    },
     collect: (m) => ({ isDragging: m.isDragging() }),
   }));
 
   return (
     <div
-      ref={(el) => { if (el) dragRef(el); }}
-      className={`peca-plano ${piscando ? "piscando" : ""} ${
-        isDragging ? "dragging" : ""
-      }`}
-      style={{
-        left: Math.round(x),
-        top: Math.round(y),
-        width: Math.round(largura),
-        height: Math.round(altura),
+      ref={(el) => {
+        elemRef.current = el;
+        if (el) dragRef(el);
       }}
-      title={`${largura}px × ${altura}px`}
-    ></div>
+      className="peca-wrapper-plano"
+      style={{
+        left: x,
+        top: y,
+        width: largura,
+        height: altura
+      }}
+    >
+      <div
+        className={`peca-plano ${piscando ? "piscando" : ""} ${isDragging ? "dragging" : ""
+          }`}
+      />
+    </div>
   );
 }

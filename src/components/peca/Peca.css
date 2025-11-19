@@ -5,6 +5,8 @@
   cursor: grab;
   background: #fff;
   transition: opacity 0.2s ease;
+  flex: 1;
+  width: auto;
 }
 
 .peca-dragging {

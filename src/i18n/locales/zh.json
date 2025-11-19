@@ -14,5 +14,6 @@
 
   "criarPlano": "创建板面",
   "erroNomePlano": "请输入板面的名称",
-  "nomePlano": "板面名称"
+  "nomePlano": "板面名称",
+  "remover": "删除"
 }

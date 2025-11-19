@@ -1,13 +1,14 @@
-// src/components/Plano/Plano.tsx
-import React, { useRef, useState } from "react";
+// src/components/plano/Plano.tsx
+import React, { useEffect, useRef, useState } from "react";
 import { useDrop } from "react-dnd";
 import { v4 as uuid } from "uuid";
 import { PecaNoPlano } from "../peca/PecaNoPlano";
 import "./Plano.css";
 
 interface PlanoProps {
-  largura: number; // px
-  altura: number;  // px
+  largura: number;
+  altura: number;
+  pecasRemovidas: string[];
 }
 
 interface PecaAlocada {
@@ -23,10 +24,19 @@ interface PecaAlocada {
   piscando?: boolean;
 }
 
-export function Plano({ largura, altura }: PlanoProps) {
+export function Plano({ largura, altura, pecasRemovidas }: PlanoProps) {
   const planoRef = useRef<HTMLDivElement | null>(null);
   const [pecas, setPecas] = useState<PecaAlocada[]>([]);
 
+  // Remover peças quando removidas da sidebar
+  useEffect(() => {
+    if (pecasRemovidas.length === 0) return;
+    setPecas((prev) =>
+      prev.filter((p) => !pecasRemovidas.includes(p.modelId || ""))
+    );
+  }, [pecasRemovidas]);
+
+  // colisão AABB
   function colide(a: PecaAlocada, b: PecaAlocada) {
     return !(
       a.x + a.largura <= b.x ||
@@ -38,15 +48,17 @@ export function Plano({ largura, altura }: PlanoProps) {
 
   const [, dropRef] = useDrop(() => ({
     accept: ["PECA", "PECA_ALOCADA"],
+
     drop: (_, monitor) => {
       const dragged = monitor.getItem() as any;
-      const offset = monitor.getSourceClientOffset();
-      if (!offset || !planoRef.current) return;
+      const mouse = monitor.getClientOffset();
+      if (!mouse || !planoRef.current) return;
 
       const rect = planoRef.current.getBoundingClientRect();
 
-      const pxX = offset.x - rect.left;
-      const pxY = offset.y - rect.top;
+      // 💎 AQUI ESTÁ A CORREÇÃO DO DELTA
+      const pxX = mouse.x - rect.left - (dragged.offsetX ?? 0);
+      const pxY = mouse.y - rect.top - (dragged.offsetY ?? 0);
 
       // mover peça existente
       if (dragged.instanciaId) {
@@ -61,8 +73,7 @@ export function Plano({ largura, altura }: PlanoProps) {
           if (!atual) return prev;
 
           const bateu = nova.some(
-            (other) =>
-              other.instanciaId !== dragged.instanciaId && colide(atual, other)
+            (o) => o.instanciaId !== atual.instanciaId && colide(atual, o)
           );
 
           if (bateu) {
@@ -96,9 +107,8 @@ export function Plano({ largura, altura }: PlanoProps) {
         return;
       }
 
-      // inserir peça nova
-      const modelId = dragged.id ?? dragged.modelId ?? uuid();
-
+      // inserir nova peça
+      const modelId = dragged.id ?? uuid();
       setPecas((prev) => [
         ...prev,
         {
@@ -114,10 +124,10 @@ export function Plano({ largura, altura }: PlanoProps) {
     },
   }));
 
-  const attachRefs = (el: HTMLDivElement | null) => {
-    planoRef.current = el;
-    dropRef(el);
-  };
+  function attachRefs(e: HTMLDivElement | null) {
+    planoRef.current = e;
+    dropRef(e);
+  }
 
   return (
     <div className="plano-wrapper">

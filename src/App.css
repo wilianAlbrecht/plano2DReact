@@ -40,3 +40,62 @@
   margin-top: 4px;
   cursor: pointer;
 }
+
+.plano-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px;
+  border: 1px solid #ddd;
+  margin-bottom: 6px;
+  background: #fff;
+}
+
+.plano-item-ativo {
+  background: #e6ffee;
+  border-color: #5cb85c;
+}
+
+.plano-click-area {
+  flex: 1;
+  cursor: pointer;
+}
+
+.btn-remover {
+  margin-left: 8px;
+  background: transparent;
+  border: none;
+  color: #b00;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.btn-remover:hover {
+  color: #ff0000;
+}
+.peca-list-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+
+  /* para evitar que o botão vá para outra linha */
+  width: 100%;
+}
+
+.btn-remover {
+  background: #fff;
+  border: 1px solid #ccc;       /* <-- borda leve para acompanhar o layout */
+  color: #b00;
+  cursor: pointer;
+  font-size: 14px;
+  padding: 2px 6px;
+  border-radius: 4px;           /* cantos suaves */
+  transition: 0.2s;
+}
+
+.btn-remover:hover {
+  background: #ffe5e5;
+  border-color: #ff0000;
+  color: #ff0000;
+}

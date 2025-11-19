@@ -1,5 +1,4 @@
-// src/components/Peca/Peca.tsx
-import React from "react";
+import React, { useRef } from "react";
 import { useDrag } from "react-dnd";
 import "./Peca.css";
 import { useTranslation } from "react-i18next";
@@ -13,16 +12,28 @@ interface PecaProps {
 
 export function Peca({ id, nome, largura, altura }: PecaProps) {
   const { t } = useTranslation();
+  const elemRef = useRef<HTMLDivElement | null>(null);
 
   const [{ isDragging }, dragRef] = useDrag(() => ({
     type: "PECA",
-    item: { id, nome, largura, altura, origem: "SIDEBAR" },
+    // begin permite definir dinamicamente o item do drag incluindo offsets
+    item: (monitor: any) => {
+      const client = monitor.getClientOffset();
+      const rect = elemRef.current?.getBoundingClientRect();
+      const offsetX = client && rect ? client.x - rect.left : 0;
+      const offsetY = client && rect ? client.y - rect.top : 0;
+
+      return { id, nome, largura, altura, origem: "SIDEBAR", offsetX, offsetY };
+    },
     collect: (m) => ({ isDragging: m.isDragging() }),
   }));
 
   return (
     <div
-      ref={(el) => { if (el) dragRef(el); }}
+      ref={(el) => {
+        elemRef.current = el;
+        if (el) dragRef(el);
+      }}
       className={`peca-wrapper ${isDragging ? "peca-dragging" : ""}`}
     >
       <div className="peca-title">{nome}</div>
