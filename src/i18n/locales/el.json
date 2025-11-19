@@ -1,0 +1,18 @@
+{
+  "idioma": "Γλώσσα",
+  "planos": "Πίνακες",
+  "pecas": "Κομμάτια",
+  "nenhumaPeca": "Κανένα κομμάτι.",
+  "selecionePlano": "Επιλέξτε ή δημιουργήστε έναν πίνακα",
+
+  "criarPeca": "Δημιουργία κομματιού",
+  "erroNomeVazio": "Εισαγάγετε ένα όνομα",
+  "nome": "Όνομα",
+  "larguraPx": "Πλάτος (px)",
+  "alturaPx": "Ύψος (px)",
+  "dimensaoPx": "{{largura}}px × {{altura}}px",
+
+  "criarPlano": "Δημιουργία πίνακα",
+  "erroNomePlano": "Εισαγάγετε όνομα για τον πίνακα",
+  "nomePlano": "Όνομα πίνακα"
+}

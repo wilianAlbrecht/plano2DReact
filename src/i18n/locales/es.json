@@ -1,0 +1,18 @@
+{
+  "idioma": "Idioma",
+  "planos": "Planos",
+  "pecas": "Piezas",
+  "nenhumaPeca": "Ninguna pieza.",
+  "selecionePlano": "Seleccione o cree un plano",
+
+  "criarPeca": "Crear pieza",
+  "erroNomeVazio": "Ingrese un nombre",
+  "nome": "Nombre",
+  "larguraPx": "Ancho (px)",
+  "alturaPx": "Altura (px)",
+  "dimensaoPx": "{{largura}}px × {{altura}}px",
+
+  "criarPlano": "Crear plano",
+  "erroNomePlano": "Ingrese un nombre para el plano",
+  "nomePlano": "Nombre del plano"
+}

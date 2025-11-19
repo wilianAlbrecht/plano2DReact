@@ -1,0 +1,18 @@
+{
+  "idioma": "语言",
+  "planos": "板面",
+  "pecas": "部件",
+  "nenhumaPeca": "没有部件。",
+  "selecionePlano": "请选择或创建一个板面",
+
+  "criarPeca": "创建部件",
+  "erroNomeVazio": "请输入名称",
+  "nome": "名称",
+  "larguraPx": "宽度 (px)",
+  "alturaPx": "高度 (px)",
+  "dimensaoPx": "{{largura}}px × {{altura}}px",
+
+  "criarPlano": "创建板面",
+  "erroNomePlano": "请输入板面的名称",
+  "nomePlano": "板面名称"
+}

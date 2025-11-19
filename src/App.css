@@ -28,3 +28,15 @@
 .plano-view {
   flex: 1;
 }
+
+
+.idioma-box {
+  margin-bottom: 16px;
+}
+
+.idioma-select {
+  width: 100%;
+  padding: 6px;
+  margin-top: 4px;
+  cursor: pointer;
+}

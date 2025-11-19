@@ -2,6 +2,7 @@
 import React from "react";
 import { useDrag } from "react-dnd";
 import "./Peca.css";
+import { useTranslation } from "react-i18next";
 
 interface PecaProps {
   id: string;
@@ -11,6 +12,8 @@ interface PecaProps {
 }
 
 export function Peca({ id, nome, largura, altura }: PecaProps) {
+  const { t } = useTranslation();
+
   const [{ isDragging }, dragRef] = useDrag(() => ({
     type: "PECA",
     item: { id, nome, largura, altura, origem: "SIDEBAR" },
@@ -23,7 +26,10 @@ export function Peca({ id, nome, largura, altura }: PecaProps) {
       className={`peca-wrapper ${isDragging ? "peca-dragging" : ""}`}
     >
       <div className="peca-title">{nome}</div>
-      <div className="peca-size">{largura}px × {altura}px</div>
+
+      <div className="peca-size">
+        {t("dimensaoPx", { largura, altura })}
+      </div>
     </div>
   );
 }

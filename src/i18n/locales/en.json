@@ -1,0 +1,18 @@
+{
+  "idioma": "Language",
+  "planos": "Boards",
+  "pecas": "Pieces",
+  "nenhumaPeca": "No pieces.",
+  "selecionePlano": "Select or create a board",
+
+  "criarPeca": "Create Piece",
+  "erroNomeVazio": "Enter a name",
+  "nome": "Name",
+  "larguraPx": "Width (px)",
+  "alturaPx": "Height (px)",
+  "dimensaoPx": "{{largura}}px × {{altura}}px",
+
+  "criarPlano": "Create Board",
+  "erroNomePlano": "Enter a name for the board",
+  "nomePlano": "Board name"
+}

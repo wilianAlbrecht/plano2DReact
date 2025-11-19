@@ -2,6 +2,8 @@
 import React, { useState } from "react";
 import "./App.css";
 
+import { useTranslation } from "react-i18next";
+
 import { CriarPeca } from "./components/peca/CriarPeca";
 import { CriarPlano } from "./components/plano/CriarPlano";
 import { Peca } from "./components/peca/Peca";
@@ -25,6 +27,8 @@ interface AppPlano {
 }
 
 function App() {
+  const { t, i18n } = useTranslation();
+
   const [pecas, setPecas] = useState<AppPeca[]>(mockPecas);
   const [planos, setPlanos] = useState<AppPlano[]>(mockPlanos);
   const [planoSelecionado, setPlanoSelecionado] = useState<AppPlano | null>(
@@ -34,6 +38,24 @@ function App() {
   return (
     <div className="app-wrapper">
       <div className="sidebar">
+
+        {/* === SELECT DE IDIOMAS === */}
+        <div className="idioma-box">
+          <label>{t("idioma") || "Idioma"}</label>
+          <select
+            className="idioma-select"
+            value={i18n.language}
+            onChange={(e) => i18n.changeLanguage(e.target.value)}
+          >
+            <option value="pt">🇧🇷 Português</option>
+            <option value="en">🇺🇸 English</option>
+            <option value="zh">🇨🇳 中文</option>
+            <option value="el">🇬🇷 Ελληνικά</option>
+            <option value="es">🇪🇸 Español</option>
+          </select>
+        </div>
+
+        {/* === Criar Plano === */}
         <CriarPlano
           onCriar={(plano) => {
             setPlanos((prev) => [...prev, plano]);
@@ -41,7 +63,8 @@ function App() {
           }}
         />
 
-        <h3>Planos</h3>
+        {/* === Lista de Planos === */}
+        <h3>{t("planos")}</h3>
         {planos.map((p) => (
           <div
             key={p.id}
@@ -56,20 +79,23 @@ function App() {
 
         <hr />
 
+        {/* === Criar Peça === */}
         <CriarPeca
           onCriar={(peca) => {
             setPecas((prev) => [...prev, peca]);
           }}
         />
 
-        <h3>Peças</h3>
-        {pecas.length === 0 && <p>Nenhuma peça.</p>}
+        {/* === Lista de Peças === */}
+        <h3>{t("pecas")}</h3>
+        {pecas.length === 0 && <p>{t("nenhumaPeca")}</p>}
 
         {pecas.map((p) => (
           <Peca key={p.id} {...p} />
         ))}
       </div>
 
+      {/* === Área do Plano === */}
       <div className="plano-view">
         {planoSelecionado ? (
           <Plano
@@ -78,7 +104,7 @@ function App() {
             altura={planoSelecionado.altura}
           />
         ) : (
-          <h2>Selecione ou crie um plano</h2>
+          <h2>{t("selecionePlano")}</h2>
         )}
       </div>
     </div>
