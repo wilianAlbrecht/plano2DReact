@@ -24,26 +24,31 @@ Ele foi desenvolvido para demonstrar domínio de React, TypeScript, gestão de e
 
 Antes de começar, certifique-se de ter instalado:
 
-'''- **Node.js 18+**  
+ **Node.js 18+**  
   Baixe em: https://nodejs.org/  '''
 
 Para verificar se o Node e o npm estão instalados corretamente:
 
-```sh
+```
 node -v
-npm -v'''
+npm -v
+```
 
 📦 2. Clonar o repositório
 
 Abra o terminal e execute:
 
-'''git clone https://github.com/wilianAlbrecht/plano2DReact.git
-'''
+```
+git clone https://github.com/wilianAlbrecht/plano2DReact.git
+
+```
 
 Entre na pasta do projeto:
 
-'''cd plano2DReact
-'''
+```
+cd plano2DReact
+
+```
 
 📁 3. Instalar as dependências
 
@@ -51,8 +56,10 @@ Este projeto usa npm como gerenciador de pacotes.
 
 Instale as dependências:
 
-'''npm install
-'''
+```
+npm install
+
+```
 
 - React
 
@@ -72,19 +79,24 @@ Instale as dependências:
 
 Inicie o servidor local do Vite:
 
-'''npm run dev '''
+```
+npm run dev
+```
 
 Você verá algo parecido com:
 
-''' VITE v4.x.x  ready in 300ms
+```
+VITE v4.x.x  ready in 300ms
 
 ➜  Local:   http://localhost:5173/
 ➜  Network: http://192.168.x.x:5173/
-'''
+```
 
 Abra no navegador:
 
-'''http://localhost:5173
-'''
+```
+http://localhost:5173
+
+```
 
 Se o navegador não abrir automaticamente, basta copiar o link e colar no seu navegador preferido.
