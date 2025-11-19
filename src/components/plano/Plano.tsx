@@ -19,8 +19,6 @@ interface PecaAlocada {
   altura: number;
   x: number;
   y: number;
-  xAnterior?: number;
-  yAnterior?: number;
   piscando?: boolean;
 }
 
@@ -31,12 +29,13 @@ export function Plano({ largura, altura, pecasRemovidas }: PlanoProps) {
   // Remover peças quando removidas da sidebar
   useEffect(() => {
     if (pecasRemovidas.length === 0) return;
+
     setPecas((prev) =>
       prev.filter((p) => !pecasRemovidas.includes(p.modelId || ""))
     );
   }, [pecasRemovidas]);
 
-  // colisão AABB
+  // Função de colisão (AABB)
   function colide(a: PecaAlocada, b: PecaAlocada) {
     return !(
       a.x + a.largura <= b.x ||
@@ -56,38 +55,49 @@ export function Plano({ largura, altura, pecasRemovidas }: PlanoProps) {
 
       const rect = planoRef.current.getBoundingClientRect();
 
-      // 💎 AQUI ESTÁ A CORREÇÃO DO DELTA
+      // Calcular posição exata com o offset correto
       const pxX = mouse.x - rect.left - (dragged.offsetX ?? 0);
       const pxY = mouse.y - rect.top - (dragged.offsetY ?? 0);
 
-      // mover peça existente
+      // =========================
+      // 🎯 MOVER PEÇA EXISTENTE
+      // =========================
       if (dragged.instanciaId) {
         setPecas((prev) => {
-          const nova = prev.map((p) =>
-            p.instanciaId === dragged.instanciaId
-              ? { ...p, xAnterior: p.x, yAnterior: p.y, x: pxX, y: pxY }
-              : p
-          );
+          // 1. capturar posição antes de mover
+          let antesX = 0;
+          let antesY = 0;
 
-          const atual = nova.find((p) => p.instanciaId === dragged.instanciaId);
+          // mover peça no array
+          const nova = prev.map((p) => {
+            if (p.instanciaId === dragged.instanciaId) {
+              antesX = p.x;
+              antesY = p.y;
+              return { ...p, x: pxX, y: pxY };
+            }
+            return p;
+          });
+
+          const atual = nova.find(
+            (p) => p.instanciaId === dragged.instanciaId
+          );
           if (!atual) return prev;
 
+          // 2. detectar colisão
           const bateu = nova.some(
-            (o) => o.instanciaId !== atual.instanciaId && colide(atual, o)
+            (o) =>
+              o.instanciaId !== atual.instanciaId && colide(atual, o)
           );
 
           if (bateu) {
+            // 3. voltar imediatamente para a posição anterior
             const revertida = prev.map((p) =>
               p.instanciaId === dragged.instanciaId
-                ? {
-                    ...p,
-                    x: p.xAnterior ?? p.x,
-                    y: p.yAnterior ?? p.y,
-                    piscando: true,
-                  }
+                ? { ...p, x: antesX, y: antesY, piscando: true }
                 : p
             );
 
+            // remover piscando depois de 1.5s
             setTimeout(() => {
               setPecas((cur) =>
                 cur.map((p) =>
@@ -107,8 +117,11 @@ export function Plano({ largura, altura, pecasRemovidas }: PlanoProps) {
         return;
       }
 
-      // inserir nova peça
+      // =========================
+      // 🎯 INSERIR PEÇA NOVA
+      // =========================
       const modelId = dragged.id ?? uuid();
+
       setPecas((prev) => [
         ...prev,
         {
