@@ -2,74 +2,69 @@
 import React from "react";
 import { useDrag } from "react-dnd";
 
-// Registra animação no documento (executa apenas uma vez)
-const style = document.createElement("style");
-style.innerHTML = `
-@keyframes blinkErro {
-  0% { opacity: 1; }
-  50% { opacity: 0.2; }
-  100% { opacity: 1; }
+// registra keyframes uma vez (se já existir, append não causará problema)
+if (!document.getElementById("blinkErro-style")) {
+  const style = document.createElement("style");
+  style.id = "blinkErro-style";
+  style.innerHTML = `
+  @keyframes blinkErro {
+    0% { opacity: 1; }
+    50% { opacity: 0.2; }
+    100% { opacity: 1; }
+  }`;
+  document.head.appendChild(style);
 }
-`;
-document.head.appendChild(style);
 
 interface Props {
-    instanciaId: string;
-    modelId: number;
-    nome: string;
-    largura: number;
-    altura: number;
-    x: number;
-    y: number;
-    escala: number;
-    temColisao: boolean;
-    piscando?: boolean; // ← NOVO
+  instanciaId: string;
+  modelId?: string;
+  nome?: string;
+  largura: number; // px
+  altura: number;  // px
+  x: number;       // px
+  y: number;       // px
+  piscando?: boolean;
 }
 
 export function PecaNoPlano({
-    instanciaId,
-    modelId,
-    nome,
-    largura,
-    altura,
-    x,
-    y,
-    escala,
-    temColisao,
-    piscando, // ← USE AQUI
+  instanciaId,
+  largura,
+  altura,
+  x,
+  y,
+  piscando,
 }: Props) {
-    const [{ isDragging }, dragRef] = useDrag(() => ({
-        type: "PECA_ALOCADA",
-        item: {
-            instanciaId,
-            modelId,
-            nome,
-            largura,
-            altura,
-            origem: "PLANO",
-        },
-        collect: (m) => ({ isDragging: m.isDragging() }),
-    }));
+  const [{ isDragging }, dragRef] = useDrag(() => ({
+    type: "PECA_ALOCADA",
+    item: { instanciaId, origem: "PLANO" },
+    collect: (m) => ({ isDragging: m.isDragging() }),
+  }));
 
-    return (
-        <div
-            ref={(el) => { if (el) dragRef(el); }}
-            style={{
-                position: "absolute",
-                left: x * escala,
-                top: y * escala,
-                width: largura * escala,
-                height: altura * escala,
-                background: piscando
-                    ? "rgba(255, 0, 0, 0.6)"
-                    : "rgba(0, 0, 255, 0.3)",
-                border: piscando ? "3px solid red" : "2px solid blue",
-                cursor: "move",
-                opacity: isDragging ? 0.4 : 1,
-                animation: piscando
-                    ? "blinkErro 0.3s ease-in-out alternate 6"
-                    : "none",
-            }}
-        />
-    );
+  return (
+    <div
+      ref={(el) => { if (el) dragRef(el); }}
+      style={{
+        position: "absolute",
+        left: Math.round(x),
+        top: Math.round(y),
+        width: Math.round(largura),
+        height: Math.round(altura),
+        background: piscando ? "rgba(255,0,0,0.6)" : "rgba(0, 110, 255, 0.18)",
+        border: piscando ? "3px solid #ff3333" : "2px solid #0a56ff",
+        boxSizing: "border-box",
+        cursor: "move",
+        opacity: isDragging ? 0.5 : 1,
+        animation: piscando ? "blinkErro 0.25s ease-in-out alternate 6" : "none",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        fontSize: 12,
+        color: "#002244",
+        userSelect: "none",
+      }}
+      title={`${largura}px × ${altura}px`}
+    >
+      {/* opcional: mostrar nome curto */}
+    </div>
+  );
 }
