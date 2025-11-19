@@ -18,75 +18,73 @@ Ele foi desenvolvido para demonstrar domínio de React, TypeScript, gestão de e
 
 ## 📦 Instalação
 
-📘 Tutorial Completo para Rodar o Projeto com Vite
-🔧 1. Pré-requisitos
+## 📘 Tutorial Completo para Rodar o Projeto com Vite
 
-Antes de começar, você precisa ter instalado:
+### 🔧 1. Pré-requisitos
 
-✔ Node.js (versão recomendada: 18+)
+Antes de começar, certifique-se de ter instalado:
 
-Baixe aqui:
-https://nodejs.org/
+'''- **Node.js 18+**  
+  Baixe em: https://nodejs.org/  '''
 
-Para verificar se está instalado:
+Para verificar se o Node e o npm estão instalados corretamente:
 
+```sh
 node -v
-npm -v
+npm -v'''
 
 📦 2. Clonar o repositório
 
 Abra o terminal e execute:
 
-git clone https://github.com/wilianAlbrecht/plano2DReact.git
+'''git clone https://github.com/wilianAlbrecht/plano2DReact.git
+'''
 
+Entre na pasta do projeto:
 
-Entre na pasta:
-
-cd plano2DReact
+'''cd plano2DReact
+'''
 
 📁 3. Instalar as dependências
 
-O projeto usa npm para gerenciar pacotes.
+Este projeto usa npm como gerenciador de pacotes.
 
-Instale tudo com:
+Instale as dependências:
 
-npm install
+'''npm install
+'''
 
+- React
 
-Esse comando instala automaticamente:
+- TypeScript
 
-React
+- Vite
 
-TypeScript
+- React DnD
 
-Vite
+- i18next
 
-React DnD
+- uuid
 
-i18next
-
-uuid
-
-e todas as dependências do projeto
+- e todas as demais dependências do projeto
 
 ⚡ 4. Executar o projeto em modo desenvolvimento
 
-Execute:
+Inicie o servidor local do Vite:
 
-npm run dev
+'''npm run dev '''
 
+Você verá algo parecido com:
 
-O Vite iniciará o servidor de desenvolvimento e mostrará algo assim:
-
-VITE v4.x.x  ready in 300ms
+''' VITE v4.x.x  ready in 300ms
 
 ➜  Local:   http://localhost:5173/
 ➜  Network: http://192.168.x.x:5173/
-
+'''
 
 Abra no navegador:
 
-http://localhost:5173
+'''http://localhost:5173
+'''
 
-
-Se o navegador não abrir sozinho, basta copiar o link.
+Se o navegador não abrir automaticamente, basta copiar o link e colar no seu navegador preferido.
