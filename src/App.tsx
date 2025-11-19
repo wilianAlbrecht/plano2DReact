@@ -9,7 +9,7 @@ import { CriarPlano } from "./components/plano/CriarPlano";
 import { Peca } from "./components/peca/Peca";
 import { Plano } from "./components/plano/Plano";
 
-// Services mockados
+// Importa serviços simulados (mock)
 import {
   listarPecas,
   criarPeca,
@@ -39,11 +39,14 @@ interface AppPlano {
 function App() {
   const { t, i18n } = useTranslation();
 
+  // Armazena lista de peças cadastradas
   const [pecas, setPecas] = useState<AppPeca[]>([]);
+  // Armazena lista de planos cadastrados
   const [planos, setPlanos] = useState<AppPlano[]>([]);
+  // Armazena plano atualmente selecionado
   const [planoSelecionado, setPlanoSelecionado] = useState<AppPlano | null>(null);
 
-  // NOVO: rastreia peças removidas para apagá-las dentro do plano
+  // Armazena IDs de peças removidas para limpar instâncias no plano
   const [pecasRemovidas, setPecasRemovidas] = useState<string[]>([]);
 
   // ==========================
@@ -51,12 +54,16 @@ function App() {
   // ==========================
   useEffect(() => {
     async function load() {
+      // Carrega peças mockadas
       const listaP = await listarPecas();
+      // Carrega planos mockados
       const listaPlan = await listarPlanos();
 
+      // Define listas iniciais
       setPecas(listaP);
       setPlanos(listaPlan);
 
+      // Seleciona primeiro plano automaticamente
       setPlanoSelecionado(listaPlan[0] || null);
     }
     load();
@@ -66,8 +73,13 @@ function App() {
   //   CRIAR PLANO
   // ==========================
   const handleCriarPlano = async (plano: AppPlano) => {
+    // Cria plano via mock
     const novo = await criarPlano(plano);
+
+    // Adiciona novo plano à lista
     setPlanos((prev) => [...prev, novo]);
+
+    // Seleciona plano recém-criado
     setPlanoSelecionado(novo);
   };
 
@@ -75,7 +87,10 @@ function App() {
   //   CRIAR PEÇA
   // ==========================
   const handleCriarPeca = async (peca: AppPeca) => {
+    // Cria peça via mock
     const nova = await criarPeca(peca);
+
+    // Adiciona peça nova à lista lateral
     setPecas((prev) => [...prev, nova]);
   };
 
@@ -83,15 +98,16 @@ function App() {
   //   REMOVER PLANO
   // ==========================
   const handleRemoverPlano = async (id: string) => {
+    // Remove plano via mock
     await removerPlano(id);
 
-    // cria a nova lista localmente primeiro
+    // Remove plano da lista local
     const novosPlanos = planos.filter((p) => p.id !== id);
 
-    // atualiza o estado com a nova lista
+    // Atualiza lista
     setPlanos(novosPlanos);
 
-    // se o plano removido era o selecionado, seleciona o primeiro da nova lista (ou null)
+    // Seleciona outro plano se o removido era o atual
     if (planoSelecionado?.id === id) {
       setPlanoSelecionado(novosPlanos[0] ?? null);
     }
@@ -101,12 +117,13 @@ function App() {
   //   REMOVER PEÇA
   // ==========================
   const handleRemoverPeca = async (id: string) => {
+    // Remove peça via mock
     await removerPeca(id);
 
-    // Remove da lista lateral
+    // Remove peça da lista lateral
     setPecas((prev) => prev.filter((p) => p.id !== id));
 
-    // Registra peça removida para apagar instâncias no plano
+    // Registra peça removida para excluir instâncias do plano
     setPecasRemovidas((prev) => [...prev, id]);
   };
 
@@ -114,9 +131,11 @@ function App() {
     <div className="app-wrapper">
       <div className="sidebar">
 
-        {/* === SELECTOR DE IDIOMAS === */}
+        {/* Selector de idiomas */}
         <div className="idioma-box">
           <label>{t("idioma")}</label>
+
+          {/* Altera idioma da interface */}
           <select
             className="idioma-select"
             value={i18n.language}
@@ -130,17 +149,18 @@ function App() {
           </select>
         </div>
 
-        {/* === Criar Plano === */}
+        {/* Formulário de criação de plano */}
         <CriarPlano onCriar={handleCriarPlano} />
 
-        {/* === Lista de Planos === */}
+        {/* Lista de planos cadastrados */}
         <h3>{t("planos")}</h3>
         {planos.map((p) => (
           <div
             key={p.id}
-            className={`plano-item ${planoSelecionado?.id === p.id ? "plano-item-ativo" : ""
-              }`}
+            // Destaca plano selecionado
+            className={`plano-item ${planoSelecionado?.id === p.id ? "plano-item-ativo" : ""}`}
           >
+            {/* Seleciona plano ao clicar */}
             <div
               className="plano-click-area"
               onClick={() => setPlanoSelecionado(p)}
@@ -148,6 +168,7 @@ function App() {
               {p.nome} — {p.largura}px × {p.altura}px
             </div>
 
+            {/* Remove plano */}
             <button
               className="btn-remover"
               onClick={() => handleRemoverPlano(p.id)}
@@ -160,17 +181,19 @@ function App() {
 
         <hr />
 
-        {/* === Criar Peça === */}
+        {/* Formulário de criação de peça */}
         <CriarPeca onCriar={handleCriarPeca} />
 
-        {/* === Lista de Peças === */}
+        {/* Lista de peças */}
         <h3>{t("pecas")}</h3>
         {pecas.length === 0 && <p>{t("nenhumaPeca")}</p>}
 
         {pecas.map((p) => (
           <div key={p.id} className="peca-list-item">
+            {/* Renderiza peça (arrastável) */}
             <Peca {...p} />
 
+            {/* Botão de remoção */}
             <button
               className="btn-remover"
               onClick={() => handleRemoverPeca(p.id)}
@@ -182,14 +205,14 @@ function App() {
         ))}
       </div>
 
-      {/* === Área do Plano === */}
+      {/* Área do plano selecionado */}
       <div className="plano-view">
         {planoSelecionado ? (
           <Plano
             key={planoSelecionado.id}
             largura={planoSelecionado.largura}
             altura={planoSelecionado.altura}
-            pecasRemovidas={pecasRemovidas}  // <--- NOVO
+            pecasRemovidas={pecasRemovidas}  // envia peças removidas para limpar instâncias
           />
         ) : (
           <h2>{t("selecionePlano")}</h2>

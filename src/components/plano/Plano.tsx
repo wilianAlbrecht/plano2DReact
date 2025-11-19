@@ -24,9 +24,10 @@ interface PecaAlocada {
 
 export function Plano({ largura, altura, pecasRemovidas }: PlanoProps) {
   const planoRef = useRef<HTMLDivElement | null>(null);
+
   const [pecas, setPecas] = useState<PecaAlocada[]>([]);
 
-  // Remover peças quando removidas da sidebar
+  // Remove instâncias de peças deletadas na sidebar
   useEffect(() => {
     if (pecasRemovidas.length === 0) return;
 
@@ -35,7 +36,7 @@ export function Plano({ largura, altura, pecasRemovidas }: PlanoProps) {
     );
   }, [pecasRemovidas]);
 
-  // Função de colisão (AABB)
+  // Verifica colisão usando AABB
   function colide(a: PecaAlocada, b: PecaAlocada) {
     return !(
       a.x + a.largura <= b.x ||
@@ -55,20 +56,19 @@ export function Plano({ largura, altura, pecasRemovidas }: PlanoProps) {
 
       const rect = planoRef.current.getBoundingClientRect();
 
-      // Calcular posição exata com o offset correto
+      // Calcula posição final da peça dentro do plano
       const pxX = mouse.x - rect.left - (dragged.offsetX ?? 0);
       const pxY = mouse.y - rect.top - (dragged.offsetY ?? 0);
 
-      // =========================
-      // 🎯 MOVER PEÇA EXISTENTE
-      // =========================
+      // ============================
+      // MOVER PEÇA EXISTENTE
+      // ============================
       if (dragged.instanciaId) {
         setPecas((prev) => {
-          // 1. capturar posição antes de mover
           let antesX = 0;
           let antesY = 0;
 
-          // mover peça no array
+          // Salva posição antiga e aplica nova posição
           const nova = prev.map((p) => {
             if (p.instanciaId === dragged.instanciaId) {
               antesX = p.x;
@@ -78,26 +78,24 @@ export function Plano({ largura, altura, pecasRemovidas }: PlanoProps) {
             return p;
           });
 
-          const atual = nova.find(
-            (p) => p.instanciaId === dragged.instanciaId
-          );
+          // Obtém peça atualizada
+          const atual = nova.find((p) => p.instanciaId === dragged.instanciaId);
           if (!atual) return prev;
 
-          // 2. detectar colisão
+          // Verifica colisão com outras peças
           const bateu = nova.some(
-            (o) =>
-              o.instanciaId !== atual.instanciaId && colide(atual, o)
+            (o) => o.instanciaId !== atual.instanciaId && colide(atual, o)
           );
 
+          // Reverte movimento e aplica efeito visual
           if (bateu) {
-            // 3. voltar imediatamente para a posição anterior
             const revertida = prev.map((p) =>
               p.instanciaId === dragged.instanciaId
                 ? { ...p, x: antesX, y: antesY, piscando: true }
                 : p
             );
 
-            // remover piscando depois de 1.5s
+            // Remove efeito de piscando após 1.5s
             setTimeout(() => {
               setPecas((cur) =>
                 cur.map((p) =>
@@ -111,21 +109,22 @@ export function Plano({ largura, altura, pecasRemovidas }: PlanoProps) {
             return revertida;
           }
 
+          // Retorna lista com movimento aplicado
           return nova;
         });
 
         return;
       }
 
-      // =========================
-      // 🎯 INSERIR PEÇA NOVA
-      // =========================
+      // ============================
+      // INSERIR NOVA PEÇA
+      // ============================
       const modelId = dragged.id ?? uuid();
 
       setPecas((prev) => [
         ...prev,
         {
-          instanciaId: uuid(),
+          instanciaId: uuid(), // Gera ID único da instância
           modelId,
           nome: dragged.nome,
           largura: dragged.largura,
@@ -137,6 +136,7 @@ export function Plano({ largura, altura, pecasRemovidas }: PlanoProps) {
     },
   }));
 
+  // Conecta div ao mecanismo de drop
   function attachRefs(e: HTMLDivElement | null) {
     planoRef.current = e;
     dropRef(e);
@@ -149,6 +149,7 @@ export function Plano({ largura, altura, pecasRemovidas }: PlanoProps) {
         className="plano-area"
         style={{ width: largura, height: altura }}
       >
+        {/* Renderiza todas as peças no plano */}
         {pecas.map((p) => (
           <PecaNoPlano key={p.instanciaId} {...p} />
         ))}
