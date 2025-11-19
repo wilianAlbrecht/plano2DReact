@@ -3,6 +3,7 @@ import React, { useRef, useState } from "react";
 import { useDrop } from "react-dnd";
 import { v4 as uuid } from "uuid";
 import { PecaNoPlano } from "../peca/PecaNoPlano";
+import "./Plano.css";
 
 interface PlanoProps {
   largura: number; // px
@@ -13,10 +14,10 @@ interface PecaAlocada {
   instanciaId: string;
   modelId?: string;
   nome?: string;
-  largura: number; // px
-  altura: number;  // px
-  x: number; // px
-  y: number; // px
+  largura: number;
+  altura: number;
+  x: number;
+  y: number;
   xAnterior?: number;
   yAnterior?: number;
   piscando?: boolean;
@@ -44,11 +45,10 @@ export function Plano({ largura, altura }: PlanoProps) {
 
       const rect = planoRef.current.getBoundingClientRect();
 
-      // posição em px dentro do plano
       const pxX = offset.x - rect.left;
       const pxY = offset.y - rect.top;
 
-      // mover peça existente (drag vindo do plano)
+      // mover peça existente
       if (dragged.instanciaId) {
         setPecas((prev) => {
           const nova = prev.map((p) =>
@@ -57,24 +57,34 @@ export function Plano({ largura, altura }: PlanoProps) {
               : p
           );
 
-          const atualizada = nova.find((p) => p.instanciaId === dragged.instanciaId);
-          if (!atualizada) return prev;
+          const atual = nova.find((p) => p.instanciaId === dragged.instanciaId);
+          if (!atual) return prev;
 
           const bateu = nova.some(
-            (other) => other.instanciaId !== dragged.instanciaId && colide(atualizada, other)
+            (other) =>
+              other.instanciaId !== dragged.instanciaId && colide(atual, other)
           );
 
           if (bateu) {
-            // reverte e pisca
             const revertida = prev.map((p) =>
               p.instanciaId === dragged.instanciaId
-                ? { ...p, x: p.xAnterior ?? p.x, y: p.yAnterior ?? p.y, piscando: true }
+                ? {
+                    ...p,
+                    x: p.xAnterior ?? p.x,
+                    y: p.yAnterior ?? p.y,
+                    piscando: true,
+                  }
                 : p
             );
 
-            // remove piscando depois de 1.5s
             setTimeout(() => {
-              setPecas((cur) => cur.map((p) => (p.instanciaId === dragged.instanciaId ? { ...p, piscando: false } : p)));
+              setPecas((cur) =>
+                cur.map((p) =>
+                  p.instanciaId === dragged.instanciaId
+                    ? { ...p, piscando: false }
+                    : p
+                )
+              );
             }, 1500);
 
             return revertida;
@@ -86,9 +96,9 @@ export function Plano({ largura, altura }: PlanoProps) {
         return;
       }
 
-      // inserir peça nova (drag vindo da sidebar)
-      // dragged tem: { id, nome, largura, altura }
+      // inserir peça nova
       const modelId = dragged.id ?? dragged.modelId ?? uuid();
+
       setPecas((prev) => [
         ...prev,
         {
@@ -104,42 +114,22 @@ export function Plano({ largura, altura }: PlanoProps) {
     },
   }));
 
-  function attachRefs(el: HTMLDivElement | null) {
+  const attachRefs = (el: HTMLDivElement | null) => {
     planoRef.current = el;
     dropRef(el);
-  }
+  };
 
   return (
-    <div>
+    <div className="plano-wrapper">
       <div
         ref={attachRefs}
-        style={{
-          width: largura,
-          height: altura,
-          border: "2px solid #222",
-          position: "relative",
-          background: "#fafafa",
-          boxShadow: "inset 0 0 0 1px #eee",
-          overflow: "hidden",
-        }}
+        className="plano-area"
+        style={{ width: largura, height: altura }}
       >
         {pecas.map((p) => (
-          <PecaNoPlano
-            key={p.instanciaId}
-            instanciaId={p.instanciaId}
-            modelId={p.modelId}
-            nome={p.nome}
-            largura={p.largura}
-            altura={p.altura}
-            x={p.x}
-            y={p.y}
-            piscando={p.piscando}
-          />
+          <PecaNoPlano key={p.instanciaId} {...p} />
         ))}
       </div>
-
-      {/* debug opcional */}
-      {/* <pre style={{ fontSize: 12 }}>{JSON.stringify(pecas, null, 2)}</pre> */}
     </div>
   );
 }

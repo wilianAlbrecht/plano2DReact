@@ -1,6 +1,7 @@
 // src/components/Peca/Peca.tsx
 import React from "react";
 import { useDrag } from "react-dnd";
+import "./Peca.css";
 
 interface PecaProps {
   id: string;
@@ -19,17 +20,10 @@ export function Peca({ id, nome, largura, altura }: PecaProps) {
   return (
     <div
       ref={(el) => { if (el) dragRef(el); }}
-      style={{
-        border: "1px solid #333",
-        padding: 8,
-        marginBottom: 6,
-        cursor: "grab",
-        opacity: isDragging ? 0.5 : 1,
-        background: "#fff",
-      }}
+      className={`peca-wrapper ${isDragging ? "peca-dragging" : ""}`}
     >
-      <div style={{ fontWeight: 600 }}>{nome}</div>
-      <div style={{ fontSize: 12 }}>{largura}px × {altura}px</div>
+      <div className="peca-title">{nome}</div>
+      <div className="peca-size">{largura}px × {altura}px</div>
     </div>
   );
 }

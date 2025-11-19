@@ -1,5 +1,6 @@
 // src/components/Plano/CriarPlano.tsx
 import React, { useState } from "react";
+import "./CriarPlano.css";
 
 interface CriarPlanoProps {
   onCriar: (plano: { id: string; nome: string; largura: number; altura: number }) => void;
@@ -17,12 +18,30 @@ export function CriarPlano({ onCriar }: CriarPlanoProps) {
   };
 
   return (
-    <div style={{ border: "1px solid #ccc", padding: 10, marginBottom: 16 }}>
+    <div className="criarplano-container">
       <h3>Criar Plano</h3>
-      <input placeholder="Nome" value={nome} onChange={(e) => setNome(e.target.value)} />
-      <input type="number" placeholder="Largura (px)" value={largura} onChange={(e) => setLargura(Number(e.target.value))} />
-      <input type="number" placeholder="Altura (px)" value={altura} onChange={(e) => setAltura(Number(e.target.value))} />
-      <div style={{ marginTop: 8 }}>
+
+      <input
+        placeholder="Nome"
+        value={nome}
+        onChange={(e) => setNome(e.target.value)}
+      />
+
+      <input
+        type="number"
+        placeholder="Largura (px)"
+        value={largura}
+        onChange={(e) => setLargura(Number(e.target.value))}
+      />
+
+      <input
+        type="number"
+        placeholder="Altura (px)"
+        value={altura}
+        onChange={(e) => setAltura(Number(e.target.value))}
+      />
+
+      <div className="criarplano-actions">
         <button onClick={criar}>Criar Plano</button>
       </div>
     </div>

@@ -1,0 +1,22 @@
+.criarpeca-container {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 16px;
+}
+
+.criarpeca-container input {
+  display: block;
+  width: 100%;
+  margin-bottom: 8px;
+  padding: 6px;
+  box-sizing: border-box;
+}
+
+.criarpeca-actions {
+  margin-top: 8px;
+}
+
+.criarpeca-actions button {
+  padding: 6px 12px;
+  cursor: pointer;
+}

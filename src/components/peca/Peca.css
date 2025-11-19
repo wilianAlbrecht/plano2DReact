@@ -1,0 +1,20 @@
+.peca-wrapper {
+  border: 1px solid #333;
+  padding: 8px;
+  margin-bottom: 6px;
+  cursor: grab;
+  background: #fff;
+  transition: opacity 0.2s ease;
+}
+
+.peca-dragging {
+  opacity: 0.5;
+}
+
+.peca-title {
+  font-weight: 600;
+}
+
+.peca-size {
+  font-size: 12px;
+}

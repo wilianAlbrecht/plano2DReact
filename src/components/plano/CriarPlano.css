@@ -1,0 +1,22 @@
+.criarplano-container {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 16px;
+}
+
+.criarplano-container input {
+  display: block;
+  width: 100%;
+  margin-bottom: 8px;
+  padding: 6px;
+  box-sizing: border-box;
+}
+
+.criarplano-actions {
+  margin-top: 8px;
+}
+
+.criarplano-actions button {
+  padding: 6px 12px;
+  cursor: pointer;
+}
